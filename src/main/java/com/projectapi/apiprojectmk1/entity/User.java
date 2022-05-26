@@ -1,8 +1,10 @@
 package com.projectapi.apiprojectmk1.entity;
 
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -22,14 +24,23 @@ public class User {
     @Column(name = "email")
     String email;
 
+    String confimPassword;
+
+    Boolean active;
+
+    String activationCode;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
     private Role role;
 
-    public User(String name, String password, String email) {
+    public User(String name, String password, String email, String confimPassword, Boolean active, String activationCode) {
         this.name = name;
         this.password = password;
         this.email = email;
+        this.confimPassword = confimPassword;
+        this.active = active;
+        this.activationCode = activationCode;
     }
 
     public User() {
@@ -45,6 +56,30 @@ public class User {
 
     public int getId() {
         return id;
+    }
+
+    public String getActivationCode() {
+        return activationCode;
+    }
+
+    public void setActivationCode(String activationCode) {
+        this.activationCode = activationCode;
+    }
+
+    public String getConfimPassword() {
+        return confimPassword;
+    }
+
+    public void setConfimPassword(String confimPassword) {
+        this.confimPassword = confimPassword;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public void setId(int id) {
