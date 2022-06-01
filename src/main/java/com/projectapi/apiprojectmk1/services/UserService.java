@@ -1,23 +1,20 @@
 package com.projectapi.apiprojectmk1.services;
 
 
-import com.projectapi.apiprojectmk1.entity.Role;
-import com.projectapi.apiprojectmk1.entity.User;
+import com.projectapi.apiprojectmk1.controllers.AutentificationController;
+import com.projectapi.apiprojectmk1.entity.AllUsers;
 import com.projectapi.apiprojectmk1.repository.RoleRepository;
 import com.projectapi.apiprojectmk1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.List;
-
 @Service
 
-public class UserService implements UserDetailsService {
+public class UserService {
+
+    @Autowired
+    AutentificationController autentificationController;
 
     private final RoleRepository roleRepository;
 
@@ -28,16 +25,12 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByName(username);
-        System.out.println(user);
-
+    public AllUsers loadUserByName(String username) throws UsernameNotFoundException {
+        AllUsers user = userRepository.findAllUsersByName(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not founded!");
         }
-        List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority(roleRepository.findRoleById(1).getRole()));
-        return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(), authorities);
+        return user;
     }
 
 //    public UserDetails findByEmail(String email) throws UsernameNotFoundException {

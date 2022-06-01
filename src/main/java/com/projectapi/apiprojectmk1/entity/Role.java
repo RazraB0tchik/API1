@@ -9,11 +9,11 @@ import java.util.List;
 @Table(name = "roles")
 @Component
 public class Role {
-    public List<User> getUserWithRole() {
+    public List<AllUsers> getUserWithRole() {
         return userWithRole;
     }
 
-    public void setUserWithRole(List<User> userWithRole) {
+    public void setUserWithRole(List<AllUsers> userWithRole) {
         this.userWithRole = userWithRole;
     }
 
@@ -26,7 +26,7 @@ public class Role {
     String role;
 
     @OneToMany(fetch = FetchType.LAZY)
-    private List<User> userWithRole;
+    private List<AllUsers> userWithRole;
 
     public Role(String role) {
         this.role = role;
